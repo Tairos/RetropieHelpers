@@ -1,0 +1,15 @@
+for eachfile in "$1"/*.cue
+do
+   IFS=$'\r\n' GLOBIGNORE='*' command eval 'lines=($(cat "$eachfile" | grep FILE))'
+   re="FILE \"(.*)\" BINARY$"
+   for line in "${lines[@]}"
+   do
+      if [[ $line =~ $re ]]; then
+         file=${BASH_REMATCH[1]}
+         if [[ ! -n `find "$1" -maxdepth 1 -iname "$file"` ]]; 
+            then echo "$file not found! $eachfile needs fix!";
+         fi 
+      fi
+   done
+done
+echo DONE

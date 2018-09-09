@@ -1,0 +1,5 @@
+for eachfile in "$1"/*.ecm
+do
+   unecm "$eachfile"
+   rm "$eachfile"
+done
